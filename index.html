@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>チラシを見る</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Yu Gothic", sans-serif;
+            background-color: #f5f5f7;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: #333;
+            overscroll-behavior-y: none;
+        }
+        .savings-box {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .savings-title {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .savings-amount {
+            font-size: 42px;
+            font-weight: bold;
+            color: #ff9500;
+        }
+        .savings-unit {
+            font-size: 18px;
+            color: #333;
+        }
+        .good-job-btn {
+            background: linear-gradient(135deg, #6e45e2, #88d3ce);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(110, 69, 226, 0.3);
+            margin-bottom: 30px;
+            transition: transform 0.1s;
+        }
+        .good-job-btn:active {
+            transform: scale(0.96);
+        }
+        .shop-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .shop-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: opacity 0.2s;
+        }
+        .shop-card:active {
+            opacity: 0.7;
+        }
+        .shop-img {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            padding: 10px;
+            box-sizing: border-box;
+            background: #fff;
+        }
+        .shop-name {
+            padding: 10px;
+            font-size: 13px;
+            font-weight: bold;
+            background: #fafafa;
+            border-top: 1px solid #eee;
+        }
+        .reset-link {
+            display: block;
+            margin-top: 40px;
+            color: #ccc;
+            font-size: 12px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="savings-box">
+        <div class="savings-title">これまでの成果</div>
+        <span class="savings-amount" id="totalAmount">0</span>
+        <span class="savings-unit">円</span>
+    </div>
+
+    <button class="good-job-btn" onclick="addSavings()">
+        今日もいい買い物した！😤<br>
+        <span style="font-size:14px; opacity:0.9;">(+300円)</span>
+    </button>
+
+    <div class="shop-list">
+        <a href="https://www.aeon.com/store/list/%E9%96%A2%E6%9D%B1/%E8%8C%A8%E5%9F%8E%E7%9C%8C/" target="_blank" class="shop-card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Aeon_logo.svg/1200px-Aeon_logo.svg.png" class="shop-img">
+            <div class="shop-name">イオンスタイル</div>
+        </a>
+        <a href="https://www.maruto-gp.co.jp/chirashi/" target="_blank" class="shop-card">
+            <img src="https://www.maruto-gp.co.jp/images/common/logo.png" class="shop-img">
+            <div class="shop-name">マルト</div>
+        </a>
+        <a href="https://yorkbenimaru.com/" target="_blank" class="shop-card">
+            <img src="https://yorkbenimaru.com/images/common/logo_h1.png" class="shop-img">
+            <div class="shop-name">ヨークベニマル</div>
+        </a>
+        <a href="http://www.super-taiyo.com/" target="_blank" class="shop-card">
+            <img src="http://www.super-taiyo.com/common/img/h_logo.gif" class="shop-img">
+            <div class="shop-name">タイヨー</div>
+        </a>
+    </div>
+
+    <a href="#" class="reset-link" onclick="resetSavings()">貯金をリセット</a>
+
+    <script>
+        let savedAmount = localStorage.getItem('savings');
+        let currentAmount = savedAmount ? parseInt(savedAmount) : 0;
+        const amountDisplay = document.getElementById('totalAmount');
+        amountDisplay.textContent = currentAmount.toLocaleString();
+
+        function addSavings() {
+            currentAmount += 300;
+            updateDisplay();
+            alert('チャリン！300円貯まりました！💰'); 
+        }
+
+        function updateDisplay() {
+            amountDisplay.textContent = currentAmount.toLocaleString();
+            localStorage.setItem('savings', currentAmount);
+        }
+
+        function resetSavings() {
+            if(confirm('本当にリセットしますか？')) {
+                currentAmount = 0;
+                updateDisplay();
+            }
+        }
+    </script>
+</body>
+</html>
